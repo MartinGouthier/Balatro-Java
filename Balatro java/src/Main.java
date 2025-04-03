@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
 public class Main extends Paquet{
-    /**Nombre de carte sélectionné*/
-    private int nbrSelection;
+
     /**Taille maximale de la main*/
     public static int tailleMain = 8;
     /**Jetons et Mult actuels*/
@@ -31,7 +30,6 @@ public class Main extends Paquet{
      */
     public Main(int j, int d, int s, Deck de){
         super();
-        this.nbrSelection = 0;
         this.deck = de;
         this.remplirMain();
         this.score = new Score();
@@ -47,10 +45,6 @@ public class Main extends Paquet{
         try {
             if (!((nbrSelection == 5) && (!this.getCartes().get(i).getEstSelectionnee()))) {
                 super.selectionCarte(i, true);
-                if (this.getCartes().get(i).getEstSelectionnee())
-                    nbrSelection++;
-                else
-                    nbrSelection--;
             } else {
                 System.out.println("Nombre de sélection maximal atteint.");
             }
@@ -141,7 +135,7 @@ public class Main extends Paquet{
      * Modifie les valeurs des listes valeurs/couleurs
      * @param c Carte
      */
-    public static void updateMains(CarteJeu c){
+    public void updateMains(CarteJeu c){
 
     }
 }

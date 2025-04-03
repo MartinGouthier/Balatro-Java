@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Paquet {
-    /*
-    private Carte[] cartes;
-    private int nbrCarte;
-    */
+
+    /**Nombre de carte sélectionné*/
+    protected int nbrSelection;
 
     private ArrayList<Carte> cartes;
 
 
     public Paquet(){
         this.cartes = new ArrayList<>();
+        this.nbrSelection = 0;
 
     }
 
@@ -54,7 +54,11 @@ public class Paquet {
         if (i>=cartes.size())
             throw new IndexOutOfBoundsException();
         else {
-            this.cartes.get(i).setEstSelectionnee();
+            this.cartes.get(i).prendreCarte();
+            if (this.cartes.get(i).getEstSelectionnee()){
+                nbrSelection++;
+            } else
+                nbrSelection--;
             if (affichage) {
                 System.out.print("La carte " + this.cartes.get(i).toString(true) + " a été ");
                 if (this.cartes.get(i).getEstSelectionnee()) {
@@ -70,6 +74,27 @@ public class Paquet {
         return this.cartes.size();
     }
 
+    public void echangerPlaces() {
+        if (nbrSelection==2){
+            Carte c1 = null;
+            Carte c2 = null;
+            for (Carte c : cartes){
+                if (c1 == null&&c.getEstSelectionnee()){
+                    c1 = c;
+                } else if (c.getEstSelectionnee()){
+                    c2 = c;
+                }
+            }
+            int i = cartes.indexOf(c2);
+            cartes.set(cartes.indexOf(c1),c2);
+            cartes.set(i,c1);
+            this.nbrSelection = 0;
+            cartes.get(cartes.indexOf(c1)).prendreCarte();
+            cartes.get(cartes.indexOf(c2)).prendreCarte();
+
+        } else
+            throw new IllegalArgumentException("2 cartes nécessaires pour cette action");
+    }
 
 
 }

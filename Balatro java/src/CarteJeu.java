@@ -18,6 +18,11 @@ public class CarteJeu extends Carte {
     private int seau;
     private int amelioration;
 
+    /**
+     * Constructeur carte de jeu avec veleur et couleur
+     * @param valeur Valeur de la carte
+     * @param couleur Couleur de la carte
+     */
     public CarteJeu(int valeur, int couleur) {
         super();
         this.couleur = couleur;

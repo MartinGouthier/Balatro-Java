@@ -49,7 +49,7 @@ public class Jeu {
                     n = Integer.parseInt(action);
                     formatActionOK = true;
                 } catch (NumberFormatException e) {
-                    if (action.equals("j") || (action.equals("d")) || (action.equals("l"))) {
+                    if (action.equals("j") || (action.equals("d")) || (action.equals("l")) || (action.equals("e"))) {
                         formatActionOK = true;
                     } else {
                         System.out.println("Saisie Incorrecte, réessayez:");
@@ -69,6 +69,13 @@ public class Jeu {
                 }
             } else if (action.equals("d"))
                 m.utiliserDefausse();
+            else if (action.equals("e")){
+                try {
+                    m.echangerPlaces();
+                } catch (IllegalArgumentException e){
+                    System.out.println(e.getMessage());
+                }
+            }
             if (!finis) {
                 System.out.println("Score actuel: " + m.getScore().toString());
                 System.out.println(m);
@@ -87,8 +94,3 @@ public class Jeu {
     }
 
 }
-/*
-A faire:
-Classe différentes mains
-Methode jouer cartes
- */
