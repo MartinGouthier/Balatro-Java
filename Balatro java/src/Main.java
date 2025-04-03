@@ -30,6 +30,7 @@ public class Main extends Paquet{
      */
     public Main(int j, int d, int s, Deck de){
         super();
+        this.cartes = new ArrayList<CarteJeu>();
         this.deck = de;
         this.remplirMain();
         this.score = new Score();

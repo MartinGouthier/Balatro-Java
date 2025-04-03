@@ -1,3 +1,5 @@
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -49,7 +51,7 @@ public class Jeu {
                     n = Integer.parseInt(action);
                     formatActionOK = true;
                 } catch (NumberFormatException e) {
-                    if (action.equals("j") || (action.equals("d")) || (action.equals("l")) || (action.equals("e"))) {
+                    if (action.equals("j") || (action.equals("d")) || (action.equals("l")) || (action.equals("e")) || (action.equals("c")) || (action.equals("v"))) {
                         formatActionOK = true;
                     } else {
                         System.out.println("Saisie Incorrecte, réessayez:");
@@ -75,13 +77,15 @@ public class Jeu {
                 } catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
                 }
+
             }
+            else if (action.equals("c"))
+                Collections.sort(m.getCartes(),new CouleurComparator());
             if (!finis) {
                 System.out.println("Score actuel: " + m.getScore().toString());
                 System.out.println(m);
                 action = sc.nextLine();
             }
-
         }
         return (m.scoreTotal >= m.scoreRequis);
 
@@ -92,5 +96,4 @@ public class Jeu {
         int n = rand.nextInt(den) + 1;
         return n <= num;
     }
-
 }

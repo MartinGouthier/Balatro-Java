@@ -6,7 +6,7 @@ public class Paquet {
     /**Nombre de carte sélectionné*/
     protected int nbrSelection;
 
-    private ArrayList<Carte> cartes;
+    protected ArrayList<Carte> cartes;
 
 
     public Paquet(){
