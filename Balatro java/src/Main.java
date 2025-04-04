@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Main extends Paquet{
+public class Main extends Deck{
 
     /**Taille maximale de la main*/
     public static int tailleMain = 8;
@@ -29,8 +29,8 @@ public class Main extends Paquet{
      * @param de Deck utilisé
      */
     public Main(int j, int d, int s, Deck de){
-        super();
-        this.cartes = new ArrayList<CarteJeu>();
+        super(true);
+        this.cartes = new ArrayList<>();
         this.deck = de;
         this.remplirMain();
         this.score = new Score();
@@ -60,12 +60,10 @@ public class Main extends Paquet{
             System.out.println("Erreur : Aucune carte a défausser");
         else {
             int i = 0;
-            int compteur = 0;
-            while ((i < this.getSize()) && (compteur < nbrSelection)){
+            while ((i < this.getSize())){
                 if (this.getCartes().get(i).getEstSelectionnee()) {
                     super.selectionCarte(i, false);
                     this.defausse.ajoutCarte(this.retirerCarte(i));
-                    compteur++;
                 }
                 else
                     i++;
@@ -85,6 +83,10 @@ public class Main extends Paquet{
             System.out.println("Aucune défausse disponible");
     }
 
+    /**
+     * @return
+     * @throws IllegalArgumentException
+     */
     public boolean jouerMain() throws IllegalArgumentException {
         if (nbrSelection == 0)
             throw new IllegalArgumentException();
@@ -93,7 +95,7 @@ public class Main extends Paquet{
         boolean finis = true;
         CarteJeu c;
         while ((i < this.getSize()) && (compteur < nbrSelection)) {
-            c = (CarteJeu) (this.getCartes().get(i));
+            c = (this.getCartes().get(i));
             if (c.getEstSelectionnee()) {
                 this.score = c.jouer(this.score);
                 compteur++;
@@ -116,7 +118,7 @@ public class Main extends Paquet{
 
     public void remplirMain(){
         while (this.getSize()<tailleMain){
-            this.ajoutCarte(this.deck.retirerCarteAlea());
+            this.ajoutCarte((CarteJeu) this.deck.retirerCarteAlea());
         }
     }
 
@@ -137,6 +139,6 @@ public class Main extends Paquet{
      * @param c Carte
      */
     public void updateMains(CarteJeu c){
-
+        //TODO Mains jouables
     }
 }

@@ -11,7 +11,7 @@ public class Jeu {
     public static Deck deck;
 
     public static void main(String[] args) throws Exception {
-        deck = new Deck();
+        deck = new Deck(false);
         int[] antes = {150, 300, 800, 1500};
         boolean gagne = lancerManche(300);
         int ante = 1;
