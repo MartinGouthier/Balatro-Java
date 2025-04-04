@@ -77,10 +77,11 @@ public class Jeu {
                 } catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
                 }
-
             }
             else if (action.equals("c"))
                 Collections.sort(m.getCartes(),new CouleurComparator());
+            else if (action.equals("v"))
+                Collections.sort(m.getCartes(),new ValeurComparator());
             if (!finis) {
                 System.out.println("Score actuel: " + m.getScore().toString());
                 System.out.println(m);

@@ -30,7 +30,6 @@ public class Main extends Deck{
      */
     public Main(int j, int d, int s, Deck de){
         super(true);
-        this.cartes = new ArrayList<>();
         this.deck = de;
         this.remplirMain();
         this.score = new Score();
