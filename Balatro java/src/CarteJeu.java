@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class CarteJeu extends Carte {
+public class CarteJeu extends Carte implements CarteEditions {
     private int couleur;
     private int valeur;
     private final int idCarte;
@@ -17,6 +17,8 @@ public class CarteJeu extends Carte {
      */
     private int seau;
     private int amelioration;
+
+    private boolean retourne;
 
     /**
      * Constructeur carte de jeu avec veleur et couleur
@@ -166,10 +168,18 @@ public class CarteJeu extends Carte {
         return s;
     }
 
-    public static void main(String[] args) {
-        int i = Integer.parseInt(args[0]);
+    @Override
+    public void retourner() {
+        this.retourne = !this.retourne;
     }
 
+    @Override
+    public boolean estRetourne() {
+        return this.retourne;
+    }
 
-
+    @Override
+    public int getEdition() {
+        return this.edition;
+    }
 }
