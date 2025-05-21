@@ -1,7 +1,4 @@
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Jeu {
 
@@ -9,13 +6,16 @@ public class Jeu {
     public static int nbrJeuTotal = 3;
     public static int argent = 4;
     public static Deck deck;
+    public static DeckJoker jokers;
 
     public static void main(String[] args) throws Exception {
         deck = new Deck(false);
+        jokers = new DeckJoker();
         int[] antes = {150, 300, 800, 1500};
-        boolean gagne = lancerManche(300);
         int ante = 1;
         double blind = 1;
+        boolean gagne = true;
+
         while (gagne && (ante < antes.length)) {
             while (gagne && (blind <= 2)) {
                 gagne = lancerManche((int) (antes[ante] * blind));
@@ -34,8 +34,8 @@ public class Jeu {
      * @return Reussite de la manche
      */
     public static boolean lancerManche(int score) throws Exception {
-        Main m = new Main(nbrJeuTotal, nbrDefausseTotal, score, deck);
-        System.out.println("Score actuel: " + m.getScore().toString());
+
+        Main m = new Main(nbrJeuTotal, nbrDefausseTotal, score);
         System.out.println(m);
         boolean finis = false;
         Scanner sc = new Scanner(System.in);
@@ -51,7 +51,7 @@ public class Jeu {
                     n = Integer.parseInt(action);
                     formatActionOK = true;
                 } catch (NumberFormatException e) {
-                    if (action.equals("j") || (action.equals("d")) || (action.equals("l")) || (action.equals("e")) || (action.equals("c")) || (action.equals("v"))) {
+                    if (action.equals("j") || (action.equals("d")) || (action.equals("l")) || (action.equals("e")) || (action.equals("c")) || (action.equals("v")) || (action.equals("s"))) {
                         formatActionOK = true;
                     } else {
                         System.out.println("Saisie Incorrecte, réessayez:");
@@ -60,7 +60,7 @@ public class Jeu {
                 }
             }
             if (n > 0) {
-                m.selectionCarte(n - 1);
+                m.selectionCarte(n - 1,true);
             } else if (action.equals("l"))
                 throw new Exception("Arret de la partie");
             else if (action.equals("j")) {
@@ -69,8 +69,13 @@ public class Jeu {
                 } catch (IllegalArgumentException e) {
                     System.out.println("Aucune carte sélectionnée");
                 }
-            } else if (action.equals("d"))
-                m.utiliserDefausse();
+            } else if (action.equals("d") ){
+                try {
+                    m.utiliserDefausse();
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Aucune carte séléctionnée");
+                }
+            }
             else if (action.equals("e")){
                 try {
                     m.echangerPlaces();
@@ -78,17 +83,20 @@ public class Jeu {
                     System.out.println(e.getMessage());
                 }
             }
+            else if (action.equals("s"))
+                m.afficherScore();
             else if (action.equals("c"))
-                Collections.sort(m.getCartes(),new CouleurComparator());
+                m.trier(new CouleurComparator());
             else if (action.equals("v"))
-                Collections.sort(m.getCartes(),new ValeurComparator());
+                m.trier(new ValeurComparator());
+            else
+                System.out.println("Saisie Incorrecte, réessayez:");
             if (!finis) {
-                System.out.println("Score actuel: " + m.getScore().toString());
                 System.out.println(m);
                 action = sc.nextLine();
             }
         }
-        return (m.scoreTotal >= m.scoreRequis);
+        return (m.getScoreTotal() >= m.getScoreRequis());
 
     }
 

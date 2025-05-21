@@ -10,9 +10,10 @@
  * 7 : Passif
  */
 
-public class Joker extends AutreCarte implements CarteEditions {
+public class Joker extends AutreCarte  {
 
     private final int idJoker;
+    private String nom;
     private boolean retourne;
     private int edition;
 
@@ -30,6 +31,15 @@ public class Joker extends AutreCarte implements CarteEditions {
         this.edition = joker.getEdition();
     }
 
+    public void jouer(Score s) {
+        //TODO Effet joker
+        marquerPoints(s);
+    }
+
+    public void marquerPoints(Score s) {
+
+    }
+
     @Override
     public String toString(boolean b) {
         return "";
@@ -39,7 +49,7 @@ public class Joker extends AutreCarte implements CarteEditions {
         return idJoker;
     }
 
-    @Override
+
     public void retourner() {
         this.retourne = !this.retourne;
     }

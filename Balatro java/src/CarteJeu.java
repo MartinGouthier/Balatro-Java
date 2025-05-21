@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class CarteJeu extends Carte implements CarteEditions {
+public class CarteJeu extends Carte {
     private int couleur;
     private int valeur;
     private final int idCarte;
@@ -9,6 +9,7 @@ public class CarteJeu extends Carte implements CarteEditions {
     public static int nbrCarte = 1;
 
     private int edition;
+
     /**
      * 1 : Seau rouge
      * 2 : Seau doré
@@ -22,7 +23,8 @@ public class CarteJeu extends Carte implements CarteEditions {
 
     /**
      * Constructeur carte de jeu avec veleur et couleur
-     * @param valeur Valeur de la carte
+     *
+     * @param valeur  Valeur de la carte
      * @param couleur Couleur de la carte
      */
     public CarteJeu(int valeur, int couleur) {
@@ -35,10 +37,10 @@ public class CarteJeu extends Carte implements CarteEditions {
         nbrCarte++;
     }
 
-    public CarteJeu(){
+    public CarteJeu() {
         Random rand = new Random();
-        this.valeur = rand.nextInt(13)+1;
-        this.couleur = rand.nextInt(4)+1;
+        this.valeur = rand.nextInt(13) + 1;
+        this.couleur = rand.nextInt(4) + 1;
         this.idCarte = nbrCarte;
         this.updateChips();
 
@@ -49,9 +51,11 @@ public class CarteJeu extends Carte implements CarteEditions {
     public int getCouleur() {
         return couleur;
     }
+
     public int getValeur() {
         return valeur;
     }
+
     public int getIdCarte() {
         return idCarte;
     }
@@ -59,18 +63,20 @@ public class CarteJeu extends Carte implements CarteEditions {
     public void setCouleur(int couleur) {
         this.couleur = couleur;
     }
+
     public void setValeur(int valeur) {
         this.valeur = valeur;
         this.updateChips();
     }
-    public void incrementeValeur(int valeur){
+
+    public void incrementeValeur(int valeur) {
         this.valeur += valeur;
         if (this.valeur > 13)
             this.valeur = this.valeur - 13;
         this.updateChips();
     }
 
-    public void updateChips(){
+    public void updateChips() {
         this.chips = valeur;
         if (valeur > 10)
             this.chips = 10;
@@ -78,25 +84,25 @@ public class CarteJeu extends Carte implements CarteEditions {
             this.chips = 11;
     }
 
-    public String toString(boolean reduit){
+    public String toString(boolean reduit) {
         StringBuilder str = new StringBuilder();
-        if ((this.valeur < 11)&&(this.valeur>1))
+        if ((this.valeur < 11) && (this.valeur > 1))
             str.append(this.valeur).append(" de ");
         else
-            switch(this.valeur){
-            case 1:
-                str.append("As de ");
-                break;
-            case 11:
-                str.append("Valet de ");
-                break;
-            case 12:
-                str.append("Dame de ");
-                break;
-            case 13:
-                str.append("Roi de ");
-        }
-        switch (this.couleur){
+            switch (this.valeur) {
+                case 1:
+                    str.append("As de ");
+                    break;
+                case 11:
+                    str.append("Valet de ");
+                    break;
+                case 12:
+                    str.append("Dame de ");
+                    break;
+                case 13:
+                    str.append("Roi de ");
+            }
+        switch (this.couleur) {
             case 1:
                 str.append("pique");
                 break;
@@ -119,11 +125,11 @@ public class CarteJeu extends Carte implements CarteEditions {
 
     }
 
-    public Score marquerPoints(Score score){
+    public void marquerPoints(Score score) {
         int n = this.chips;
         if (this.seau == 2)
             Jeu.argent += 3;
-        switch (this.amelioration){
+        switch (this.amelioration) {
             case 1:
                 n += 30;
                 break;
@@ -134,16 +140,16 @@ public class CarteJeu extends Carte implements CarteEditions {
                 n = 50;
                 break;
             case 4:
-                if (Jeu.calculerProba(1,5))
+                if (Jeu.calculerProba(1, 5))
                     score.ajouterMult(20);
-                if (Jeu.calculerProba(1,15))
+                if (Jeu.calculerProba(1, 15))
                     Jeu.argent += 20;
                 break;
             case 5:
                 score.multiplierMult(2);
-                if (Jeu.calculerProba(1,4))
+                if (Jeu.calculerProba(1, 4)){}
                     //TODO CASSER CARTE
-                break;
+
 
         }
         score.ajouterChips(n);
@@ -158,28 +164,12 @@ public class CarteJeu extends Carte implements CarteEditions {
                 score.multiplierMult(1.5);
                 break;
         }
-        return score;
     }
 
-    public Score jouer(Score s){
-        s = this.marquerPoints(s);
+    public void jouer(Score s) {
+        this.marquerPoints(s);
         if (this.seau == 1)
-            s = marquerPoints(s);
-        return s;
-    }
+            marquerPoints(s);
 
-    @Override
-    public void retourner() {
-        this.retourne = !this.retourne;
-    }
-
-    @Override
-    public boolean estRetourne() {
-        return this.retourne;
-    }
-
-    @Override
-    public int getEdition() {
-        return this.edition;
     }
 }

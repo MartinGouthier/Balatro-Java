@@ -1,42 +1,80 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Paquet {
+public abstract class Paquet<T extends Carte> {
 
     /**Nombre de carte sélectionné*/
-    protected int nbrSelection;
+    private int nbrSelection;
 
-    protected ArrayList<Carte> cartes;
+    /**
+     * Liste de cartes du paquet
+     */
+    private ArrayList<T> cartes;
 
-
+    /**
+     * Constructeur vide de paquet
+     */
     public Paquet(){
         this.cartes = new ArrayList<>();
         this.nbrSelection = 0;
 
     }
 
-    public void ajoutCarte(Carte c){
+    /**
+     * Ajout d'une carte dans un paquet
+     * @param c Carte ajoutée
+     */
+    public void ajoutCarte(T c){
         cartes.add(c);
     }
 
-    public ArrayList<Carte> getCartes(){
+    /**
+     * Getter de cartes
+     * @return
+     */
+    public ArrayList<T> getCartes(){
         return cartes;
     }
 
-    public Carte retirerCarte(int p){
-        if (p>=cartes.size())
-            throw new IndexOutOfBoundsException();
-        Carte c = cartes.get(p);
+    public T getCarte(int i){
+        return cartes.get(i);
+    }
+
+    public void enleverCarte(Carte c){
+        this.cartes.remove(c);
+    }
+
+    public void enleverCarte(int i){
+        this.cartes.remove(i);
+    }
+
+    /**
+     * Retire une carte précise du paquet
+     * @param p Indice de la carte
+     * @return Carte retirée
+     */
+    public T retirerCarte(int p){
+        if (p>=this.getSize())
+            throw new IndexOutOfBoundsException("Indice incorrect");
+        T c = cartes.get(p);
         cartes.remove(c);
         return c;
     }
 
-    public Carte retirerCarteAlea(){
+    /**
+     * Retire une carte aléatoire du paquet
+     * @return Carte retirée
+     */
+    public T retirerCarteAlea(){
         Random rand = new Random();
-        int p = rand.nextInt(cartes.size());
+        int p = rand.nextInt(this.getSize());
         return this.retirerCarte(p);
     }
 
+    /**
+     * Affichage du paquet
+     * @return Affichage
+     */
     public String toString(){
         StringBuilder str = new StringBuilder();
         for (int i = 0;i<this.cartes.size();i++) {
@@ -70,15 +108,31 @@ public class Paquet {
 
     }
 
+    /**
+     * Getter taille du paquet
+     * @return taille du paquet
+     */
     public int getSize(){
         return this.cartes.size();
     }
 
+    /**
+     * Getter nombre de sélecton
+     * @return Nombre de cartes séléctionnées
+     */
+
+    public int getNbrSelection() {
+        return nbrSelection;
+    }
+
+    /**
+     * Methode pour échanger de place 2 cartes sélectionnées
+     */
     public void echangerPlaces() {
         if (nbrSelection==2){
-            Carte c1 = null;
-            Carte c2 = null;
-            for (Carte c : cartes){
+            T c1 = null;
+            T c2 = null;
+            for (T c : cartes){
                 if (c1 == null&&c.getEstSelectionnee()){
                     c1 = c;
                 } else if (c.getEstSelectionnee()){

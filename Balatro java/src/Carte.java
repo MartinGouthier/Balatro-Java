@@ -1,6 +1,6 @@
 public abstract class Carte {
     private boolean estSelectionnee;
-    private int id;
+    private final int id;
     public static int nbrCartesTotal = 0;
 
     public Carte(){
@@ -11,11 +11,13 @@ public abstract class Carte {
     }
 
 
-
     public boolean getEstSelectionnee() {
         return estSelectionnee;
     }
 
+    /**
+     * Lève ou abaisse une carte
+     */
     public void prendreCarte() {
         estSelectionnee = !estSelectionnee;
     }
