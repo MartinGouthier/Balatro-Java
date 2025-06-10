@@ -7,6 +7,7 @@ public class Jeu {
     public static int argent = 4;
     public static Deck deck;
     public static DeckJoker jokers;
+    public static int coefChance = 0;
 
     public static void main(String[] args) throws Exception {
         deck = new Deck(false);
@@ -103,6 +104,6 @@ public class Jeu {
     public static boolean calculerProba(int num, int den) {
         Random rand = new Random();
         int n = rand.nextInt(den) + 1;
-        return n <= num;
+        return n <= (num*Math.pow(2,coefChance));
     }
 }
